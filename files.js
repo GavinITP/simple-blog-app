@@ -17,8 +17,8 @@ fs.writeFile("./docs/blog1.txt", "Here is my written message", () => {
 });
 
 // create new file if it doesn't exist
-fs.writeFile("./docs/blog3.txt", "Here is my written message", () => {
-  console.log("file was written in blog3");
+fs.writeFile("./docs/blog2.txt", "Here is my written message", () => {
+  console.log("file was written in blog2");
 });
 
 // create directories (handle error if it already exist)
