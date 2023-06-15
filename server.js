@@ -8,9 +8,15 @@ const server = http.createServer((req, res) => {
   switch (req.url) {
     case "/":
       path += "index.html";
+      res.statusCode = 200;
       break;
     case "/about":
       path += "about.html";
+      res.statusCode = 200;
+      break;
+    case "/about-me": // redirect
+      res.statusCode = 301;
+      res.setHeader("location", "/about");
       break;
     default:
       path += "404.html";
@@ -23,7 +29,6 @@ const server = http.createServer((req, res) => {
       res.end("Error happened");
     } else {
       res.end(data);
-      res.statusCode = 200;
     }
   });
 });
