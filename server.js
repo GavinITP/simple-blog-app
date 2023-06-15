@@ -14,6 +14,7 @@ const server = http.createServer((req, res) => {
       break;
     default:
       path += "404.html";
+      res.statusCode = 404;
   }
 
   fs.readFile(path, (err, data) => {
@@ -22,6 +23,7 @@ const server = http.createServer((req, res) => {
       res.end("Error happened");
     } else {
       res.end(data);
+      res.statusCode = 200;
     }
   });
 });
