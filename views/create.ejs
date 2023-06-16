@@ -1,22 +1,21 @@
-<!DOCTYPE html>
 <html lang="en">
-  <%- include("./partials/head.ejs") %>
-  <body>
-    <%- include("./partials/nav.ejs") %>
+<%- include("./partials/head.ejs") %>
 
-    <div>
-      <h2>Create Blog</h2>
-      <form>
-        <label></label>
-        <input type="text" />
-        <label></label>
-        <input type="text" />
-        <label></label>
-        <input type="text" />
+<body>
+  <%- include("./partials/nav.ejs") %>
 
-        <button>Submit</button>
-      </form>
-    </div>
-    <%- include("./partials/footer.ejs") %>
-  </body>
+  <div class="create-blog content">
+    <form>
+      <label for="title">Blog title:</label>
+      <input type="text" id="title" name="title" required>
+      <label for="snippet">Blog snippet:</label>
+      <input type="text" id="snippet" name="snippet" required>
+      <label for="body">Blog body:</label>
+      <textarea id="body" name="body" required></textarea>
+      <button>Submit</button>
+    </form>
+  </div>
+
+  <%- include("./partials/footer.ejs") %>
+</body>
 </html>
