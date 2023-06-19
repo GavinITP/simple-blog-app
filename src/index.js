@@ -59,6 +59,18 @@ app.get("/all-blogs", (req, res) => {
     });
 });
 
+app.get("/single-blog/:blogId", (req, res) => {
+  const blogId = req.params.blogId;
+
+  Blog.findById(blogId)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 app.get("/", (req, res) => {
   const blogs = [
     {
