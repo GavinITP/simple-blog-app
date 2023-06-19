@@ -3,6 +3,8 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
+const Blog = require("./models/Blog");
+
 dotenv.config();
 
 // express app
@@ -24,28 +26,37 @@ mongoose
 
 // register view engine
 app.set("view engine", "ejs");
+app.set("views", "src/views");
 
 // middleware & static files
 app.use(express.static("public"));
-
-app.use((req, res, next) => {
-  console.log("new request made:");
-  console.log("host: ", req.hostname);
-  console.log("path: ", req.path);
-  console.log("method: ", req.method);
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log("in the next middleware");
-  next();
-});
-
 app.use(morgan("dev"));
 
-app.use((req, res, next) => {
-  res.locals.path = req.path;
-  next();
+app.get("/add-blog", (req, res) => {
+  const blog = new Blog({
+    title: "Where to travel in Thailand",
+    snippet: "asdfadsf",
+    body: "132412341234",
+  });
+
+  blog
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/all-blogs", (req, res) => {
+  Blog.find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/", (req, res) => {
