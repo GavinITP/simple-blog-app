@@ -15,7 +15,7 @@ const DB_URI = process.env.DB_URI;
 
 mongoose
   .connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => {
+  .then((_result) => {
     console.log("connected to db");
     // listen for request after connected to db
     app.listen(3000, () => {
@@ -32,7 +32,7 @@ app.set("views", "src/views");
 app.use(express.static("public"));
 app.use(morgan("dev"));
 
-app.get("/add-blog", (req, res) => {
+app.get("/add-blog", (_req, res) => {
   const blog = new Blog({
     title: "Where to travel in Thailand",
     snippet: "asdfadsf",
@@ -49,7 +49,7 @@ app.get("/add-blog", (req, res) => {
     });
 });
 
-app.get("/all-blogs", (req, res) => {
+app.get("/all-blogs", (_req, res) => {
   Blog.find()
     .then((result) => {
       res.send(result);
@@ -71,33 +71,29 @@ app.get("/single-blog/:blogId", (req, res) => {
     });
 });
 
-app.get("/", (req, res) => {
-  const blogs = [
-    {
-      title: "Yoshi finds eggs",
-      snippet: "Lorem ipsum dolor sit amet consectetur",
-    },
-    {
-      title: "Mario finds stars",
-      snippet: "Lorem ipsum dolor sit amet consectetur",
-    },
-    {
-      title: "How to defeat bowser",
-      snippet: "Lorem ipsum dolor sit amet consectetur",
-    },
-  ];
-  res.render("index", { title: "Home", blogs });
+app.get("/", (_req, res) => {
+  res.redirect("/blogs");
 });
 
-app.get("/about", (req, res) => {
+app.get("/blogs", (_req, res) => {
+  Blog.find()
+    .then((result) => {
+      res.render("index", { title: "All blogs", blogs: result });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/about", (_req, res) => {
   res.render("about", { title: "About" });
 });
 
-app.get("/blogs/create", (req, res) => {
+app.get("/blogs/create", (_req, res) => {
   res.render("create", { title: "Create a new blog" });
 });
 
 // 404 page
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).render("404", { title: "404" });
 });
